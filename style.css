@@ -1,12 +1,12 @@
-/* Configuración básica de la página */
+/* --- Configuración General (Igual que antes) --- */
 body {
-    background-color: #050505; /* Negro profundo casi puro */
+    background-color: #050505; /* Fondo negro profundo */
     margin: 0;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente más moderna */
     overflow: hidden;
 }
 
@@ -22,120 +22,166 @@ body {
 /* Textos con efecto de brillo */
 .text-above, .text-below {
     color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 10px rgba(255, 105, 135, 0.7); /* Brillo rosado */
     z-index: 10;
     opacity: 0;
-    animation: fadeIn 3s ease-in forwards; /* El texto aparece suavemente */
+    animation: fadeIn 3s ease-in forwards 0.5s;
+    letter-spacing: 1px;
 }
 
 .text-above {
     font-size: 1.8rem;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-weight: 300;
 }
 
 .text-below {
     font-size: 1.2rem;
-    margin-top: 180px; /* Espacio para que no choque con el tallo */
+    margin-top: 180px;
+    font-weight: 300;
 }
 
-/* Contenedor de la flor para centrar todo */
+/* Contenedor principal que flota */
 .flower-wrapper {
     position: relative;
     width: 200px;
     height: 300px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    animation: float 3s ease-in-out infinite; /* Flota suavemente */
+    align-items: flex-start; /* Alineado arriba para que el tallo baje */
+    padding-top: 50px;
+    animation: float 3s ease-in-out infinite;
 }
 
-/* Tallo */
+/* --- Tallo y Hojas (Mejorados) --- */
 .stem {
     position: absolute;
-    width: 8px;
-    height: 200px;
-    background: linear-gradient(to right, #004d00, #008000);
-    top: 100px;
+    width: 6px;
+    height: 180px;
+    background: linear-gradient(to right, #003300, #005500, #003300);
+    top: 120px; /* Ajustado para conectar con la nueva rosa */
     border-radius: 4px;
     z-index: 1;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
 }
 
-/* Hojas */
 .leaf {
     position: absolute;
-    width: 50px;
-    height: 30px;
-    background: linear-gradient(to top right, #004d00, #008000);
+    width: 40px;
+    height: 25px;
+    background: linear-gradient(to bottom right, #004d00, #008000);
     border-radius: 0 50% 0 50%;
     z-index: 2;
     top: 150px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 
 .leaf-left {
-    left: 45px;
-    transform: rotate(-10deg);
+    left: 55px;
+    transform: rotate(-20deg) scaleX(-1); /* Espejo para variar */
 }
 
 .leaf-right {
-    right: 45px;
-    transform: rotate(190deg);
+    right: 55px;
+    transform: rotate(20deg);
 }
 
-/* La cabeza de la rosa */
-.rose {
+/* --- LA NUEVA ROSA MEJORADA --- */
+
+/* El contenedor principal del capullo */
+.rose-bud {
     position: relative;
     width: 100px;
     height: 100px;
     z-index: 5;
-    animation: bloom 2s ease-out forwards; /* Animación de florecer */
+    animation: bloom 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
-/* Pétalos generales */
-.petal {
+/* Capa base para todas las partes de la flor */
+.petal-layer, .center {
     position: absolute;
-    background: radial-gradient(circle at 10% 20%, #ff0040, #800020);
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
+    /* Esta es la clave: usar sombras para "dibujar" los pétalos */
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 
+                0 0 5px rgba(0,0,0,0.3);
 }
 
-/* Capas de pétalos */
-.p1 { width: 100px; height: 100px; top: 0; left: 0; background: #990033; }
-.p2 { width: 90px; height: 90px; top: 5px; left: 5px; transform: rotate(20deg); background: #b3003b; }
-.p3 { width: 80px; height: 80px; top: 10px; left: 10px; transform: rotate(45deg); background: #cc0044; }
-.p4 { width: 70px; height: 70px; top: 15px; left: 15px; transform: rotate(70deg); background: #e6004c; }
-.p5 { width: 60px; height: 60px; top: 20px; left: 20px; transform: rotate(90deg); background: #ff0055; }
-.p6 { width: 50px; height: 50px; top: 25px; left: 25px; transform: rotate(110deg); background: #ff3377; }
-
-/* El centro de la flor (capullo cerrado) */
-.center-bud {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    top: 35px;
-    left: 35px;
-    background: radial-gradient(circle, #ff6699, #800020);
-    border-radius: 50%;
-    box-shadow: inset 0 0 10px #330000;
+/* Capa exterior: Roja profunda, define la forma general */
+.layer-1 {
+    background: conic-gradient(
+        from 45deg,
+        #8a0000 0%,   /* Rojo oscuro */
+        #c70039 40%,  /* Rojo vibrante */
+        #8a0000 80%,  /* Rojo oscuro */
+        #520000 100%  /* Casi negro */
+    );
+    transform: rotate(0deg);
+    /* Un clip-path sutil para que no sea un círculo perfecto */
+    clip-path: polygon(50% 0%, 85% 15%, 100% 50%, 85% 85%, 50% 100%, 15% 85%, 0% 50%, 15% 15%);
 }
 
-/* Animaciones */
+/* Capa media: El remolino principal */
+.layer-2 {
+    width: 85%;
+    height: 85%;
+    top: 7.5%;
+    left: 7.5%;
+    background: conic-gradient(
+        from 180deg,
+        #c70039 0%,
+        #ff1a53 50%, /* Rosa intenso */
+        #99002b 100%
+    );
+    transform: rotate(60deg);
+    border-radius: 50% 5% 50% 40%; /* Forma irregular para simular pétalos doblados */
+    box-shadow: inset -5px -5px 20px rgba(0,0,0,0.4);
+}
 
-/* Efecto de nacer desde cero */
+/* Capa interna: El corazón más cerrado */
+.layer-3 {
+    width: 65%;
+    height: 65%;
+    top: 17.5%;
+    left: 17.5%;
+    background: conic-gradient(
+        from 270deg,
+        #d40041 0%,
+        #ff4d79 60%, /* Centro más claro */
+        #d40041 100%
+    );
+    transform: rotate(140deg);
+    border-radius: 40% 50% 5% 50%;
+    box-shadow: inset 2px 2px 15px rgba(0,0,0,0.5);
+}
+
+/* El centro absoluto (el "ojo" de la rosa) */
+.center {
+    width: 30%;
+    height: 30%;
+    top: 35%;
+    left: 35%;
+    background: radial-gradient(circle at 30% 30%, #ff85a6, #99002b);
+    box-shadow: inset 0 0 10px #4a0015;
+    transform: rotate(45deg);
+}
+
+
+/* --- Animaciones --- */
+
 @keyframes bloom {
-    0% { transform: scale(0); opacity: 0; }
-    80% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); }
+    0% { transform: scale(0) rotate(-90deg); opacity: 0; }
+    60% { transform: scale(1.1) rotate(10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
-/* Efecto de aparecer texto */
 @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
+    0% { opacity: 0; transform: translateY(30px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Efecto de flotar suavemente */
 @keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
 }
